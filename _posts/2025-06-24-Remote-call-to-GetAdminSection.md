@@ -10,4 +10,4 @@ Our test environment consists of a Windows Server (192.168.0.1) and an attacker 
 
 In the sections that follow, we’ll walk through how this interaction works under the hood, how to trigger it programmatically, and why this seemingly harmless RPC function can become a powerful tool in the hands of an attacker.
 
----
+## In production...
