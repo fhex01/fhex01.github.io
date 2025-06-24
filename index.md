@@ -1,18 +1,14 @@
-# Welcome to my Personnal Blog
+I'm a hacker and computer science researcher, with a particular focus on Microsoft environments, from Windows internals and Active Directory to cloud infrastructure like Azure.
 
-I'm a hacker and computer science researcher, with a particular focus on Microsoft environments — from Windows internals and Active Directory to cloud infrastructure like Azure.
-
-This blog serves as a space where I share technical research, in-depth articles, and experimental findings related to cybersecurity, reverse engineering, privilege escalation, and more. Whether you're a fellow researcher, red teamer, blue teamer, or simply passionate about security, I hope you'll find valuable insights here.
+This blog serves as a space where I share technical research, in-depth articles, and experimental findings related to computer sciences, and more. Whether you're a fellow researcher, red teamer, blue teamer, or simply passionate about security, I hope you'll find valuable insights here.
 
 Stay curious, stay sharp.
 
-![icon](images/logo.jpg)
+![icon](images/logo.png)
 
 ## Recent Articles
 
 New posts will appear below this page as they are published. All content is written in Markdown, and code samples, diagrams, and walkthroughs are often included.
-
-If you're interested in a specific topic or want to get in touch, feel free to reach out or leave a comment on any post.
 
 ---
 
