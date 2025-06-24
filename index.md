@@ -1,3 +1,5 @@
+# Welcome, dear friend,
+
 I'm a hacker and computer science researcher, with a particular focus on Microsoft environments, from Windows internals and Active Directory to cloud infrastructure like Azure.
 
 This blog serves as a space where I share technical research, in-depth articles, and experimental findings related to computer sciences, and more. Whether you're a fellow researcher, red teamer, blue teamer, or simply passionate about security, I hope you'll find valuable insights here.
