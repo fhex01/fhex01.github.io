@@ -1,4 +1,4 @@
-# Welcome to My Research Blog
+# Welcome to my Personnal Blog
 
 I'm a hacker and computer science researcher, with a particular focus on Microsoft environments — from Windows internals and Active Directory to cloud infrastructure like Azure.
 
