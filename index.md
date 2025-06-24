@@ -1,7 +1,19 @@
-Hello and welcome to this blog. Edit the `index.md` file to change this content. All pages on the blog, including this one, use [Markdown](https://guides.github.com/features/mastering-markdown/). You can include images:
+# Welcome to My Research Blog
 
-![Image of fast.ai logo](images/logo.png)
+I'm a hacker and computer science researcher, with a particular focus on Microsoft environments — from Windows internals and Active Directory to cloud infrastructure like Azure.
 
-## This is a title
+This blog serves as a space where I share technical research, in-depth articles, and experimental findings related to cybersecurity, reverse engineering, privilege escalation, and more. Whether you're a fellow researcher, red teamer, blue teamer, or simply passionate about security, I hope you'll find valuable insights here.
 
-And you can include links, like this [link to fast.ai](https://www.fast.ai). Posts will appear after this file. 
+Stay curious, stay sharp.
+
+![icon](images/logo.png)
+
+## Recent Articles
+
+New posts will appear below this page as they are published. All content is written in Markdown, and code samples, diagrams, and walkthroughs are often included.
+
+If you're interested in a specific topic or want to get in touch, feel free to reach out or leave a comment on any post.
+
+---
+
+*Note: All research shared here is for educational purposes and responsible disclosure is a core value.*
