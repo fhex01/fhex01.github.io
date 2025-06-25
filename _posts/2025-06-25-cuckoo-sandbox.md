@@ -10,7 +10,7 @@ We’ll also cover real-world use cases and evaluate how Cuckoo stands up in 202
 
 ## Under the Hood: How Cuckoo Works
 
-First, we will examine how this technology works from the outside. We will look at what needs to be set up for everything to function properly, without issues and without security concerns. Indeed, there can be serious security risks if the tool is not properly configured or installed. Here is an ASCII diagram that gives a rough understanding of the high-level architecture of the Cuckoo technology:
+First, we will examine how this technology works from the outside. We will look at what needs to be set up for everything to function properly, without issues and without security concerns. Indeed, there can be **serious security risks** if the tool is not properly configured or installed. Below is an **ASCII diagram** that provides a rough understanding of the **high-level architecture** of the `Cuckoo Sandbox` technology:
 
 ```
                   +----------------------+
@@ -54,8 +54,4 @@ First, we will examine how this technology works from the outside. We will look 
                    +-----------------+
 ```
 
-The starting point of the architecture is the user or analyst, typically a malware researcher, SOC operator, or threat intelligence professional. The user submits a suspicious sample to the sandbox for analysis. This can be done via a command-line interface, a RESTful API (available in Cuckoo-modified forks), or a web-based front end. 
-
-![image](https://github.com/user-attachments/assets/4b7faebf-419b-4bff-826e-1dd99558116d)
-
-The submission includes the sample itself along with optional parameters such as analysis timeout, target platform, network configuration, and custom options (whether to enable network sniffing).
+A user submits a sample to the **Cuckoo Core**, which uses a `scheduler` to queue the task and spin up a clean VM snapshot. Inside the guest, a lightweight `agent` launches the sample while the `analyzer` observes behaviors like API calls, file modifications, registry edits, and network traffic. All activity is logged and returned to the host, where **processing modules** extract insights and **reporting modules** generate structured outputs (JSON, HTML). Results are stored in a database and can be accessed via a **web interface** or **API**. The whole system runs in a controlled environment to prevent malware from escaping or causing harm.
