@@ -6,7 +6,7 @@ This blog serves as a space where I share technical research, in-depth articles,
 
 Stay curious, stay sharp.
 
-![icon](images/logo.png)
+![icon](images/logo.jpg)
 
 ## Recent Articles
 
