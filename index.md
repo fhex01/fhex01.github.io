@@ -6,8 +6,6 @@ This blog serves as a space where I share technical research, in-depth articles,
 
 Stay curious, stay sharp.
 
-![icon](images/logo.jpg)
-
 ## Recent Articles
 
 New posts will appear below this page as they are published. All content is written in Markdown, and code samples, diagrams, and walkthroughs are often included.
