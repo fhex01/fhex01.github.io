@@ -12,10 +12,10 @@ Its main purpose is to maintain accurate time synchronization across networked d
 
 ![image](https://github.com/user-attachments/assets/3d5e8fe6-477b-45a6-be24-be886235781e)
 
-If there is a time difference greater than 5 minutes between the client and the **domain controller**, Kerberos pre-authentication fails. **MS-SNTP** ensures that all systems within an **Active Directory** domain are synchronized to a reliable time source. On each **Windows** machine within an **Active Directory** domain, time synchronization is generally handled by the `svchost.exe` service. It loads its configuration from the registry key `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time`, then determines its time service role based on the machine’s context, whether it is a **Domain Controller (DC)**, a **PDC Emulator**, a regular **domain member**, or a **workgroup** computer. Next, the system determines its time source. Each host queries both the registry and the **Active Directory** environment to figure out from whom it should synchronize time.
->
-> For example:
->
+If there is a time difference greater than 5 minutes between the client and the **domain controller**, Kerberos pre-authentication fails. **MS-SNTP** ensures that all systems within an **Active Directory** domain are synchronized to a reliable time source. On each **Windows** machine within an **Active Directory** domain, time synchronization is generally handled by the `svchost.exe` service. 
+
+It loads its configuration from the registry key `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time`, then determines its time service role based on the machine’s context, whether it is a **Domain Controller (DC)**, a **PDC Emulator**, a regular **domain member**, or a **workgroup** computer. Next, the system determines its time source. Each host queries both the registry and the **Active Directory** environment to figure out from whom it should synchronize time.
+
 > * If the machine is a **domain-joined client**, it uses the closest **Domain Controller (DC)**, determined via **DNS** and the **DC Locator** mechanism.
 > * If it's a **non-PDC Domain Controller**, it is configured to synchronize with the **PDC Emulator** of its domain.
 > * If it's the **PDC Emulator**, and specifically the one for the **forest root domain**, it typically uses the `ManualPeerList`, often configured with external public **NTP servers**, as its time source.
