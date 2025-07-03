@@ -21,5 +21,3 @@ For example:
 > * If the machine is a **domain-joined client**, it uses the closest **Domain Controller (DC)**, determined via **DNS** and the **DC Locator** mechanism.
 > * If it's a **non-PDC Domain Controller**, it is configured to synchronize with the **PDC Emulator** of its domain.
 > * If it's the **PDC Emulator**, and specifically the one for the **forest root domain**, it typically uses the `ManualPeerList`, often configured with external public **NTP servers**, as its time source.
-
-![image](https://github.com/user-attachments/assets/d1795186-7231-4f8d-8b98-fa847065a1a7)
