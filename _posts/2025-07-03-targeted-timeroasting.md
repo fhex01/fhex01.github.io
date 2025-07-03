@@ -1,4 +1,4 @@
-# Targeted Timeroasting: Weaponizing Computers with Controlled UAC Flags
+# Targeted Timeroasting: Weaponizing Users and Computers with Controlled UAC Flags
 
 Do you know **NTP**, or its Microsoft Windows variant, **MS-SNTP**? Well, I racked my brain trying to figure out what it was, and I found it really interesting. In this article, we will focus exclusively on the **MS-SNTP** protocol. We will explore how this protocol could potentially be exploited to steal authentication or identification credentials. 
 
