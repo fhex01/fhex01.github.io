@@ -13,3 +13,15 @@ Other **Domain Controllers (DC01)** within the domain synchronize their time wit
 Workstations such as **WS01** and **WS02** synchronize their clocks with their respective domain controllers. When there is a significant difference between the local clock and the DC's time, the client will perform an **NTP Step**, an immediate correction to bring the local time into alignment. This typically occurs at system startup or when a workstation first joins the domain. If the time offset is small, a gradual adjustment (slew) is used instead, though this is not depicted in the diagram.
 
 Overall, the diagram illustrates how **time flows downward** from a trusted root, the PDC Emulator, through the domain controllers and ultimately to the workstations. The note at the bottom highlights a key security point: **all time synchronization within the domain is protected using MS-SNTP**, ensuring authenticity and preventing time-based attacks that could undermine services like Kerberos.
+
+![image](https://github.com/user-attachments/assets/1593137d-6e79-48a4-9b7f-6743bceb94bb)
+
+This flowchart outlines the request-generation logic used by Microsoft’s implementation of secure time synchronization, **MS-SNTP**, particularly when preparing a time request from a domain-joined client or server.
+
+The process begins by evaluating whether the client supports ExtendedAuthenticator, a **Kerberos-based** authentication mechanism introduced by Microsoft to enhance *NTP security*. If support is available, the client generates an ExtendedAuthenticator Request, which typically includes additional fields for cryptographic verification. If this feature is not supported, the client defaults to generating a standard Authenticator Request, which still leverages Kerberos but with fewer parameters.
+
+Once the appropriate authentication method is selected, the system determines whether the client itself is acting as a time source, for example, a **Domain Controller** or a **PDC Emulator**. If the client is a time source, it enters a Symmetric Active mode, which allows for mutual time exchanges between peers. If it is not a time source (like a workstation or non-PDC DC), the client sets its mode to Client, indicating a one-way request toward a higher-trust time server.
+
+Finally, with the correct mode and authenticator in place, the client sends the request to its designated time server (typically a domain controller). This marks the end of the time sync request initialization phase.
+
+This logic enforces Microsoft’s secure design, ensuring that all domain time requests are authenticated and appropriately categorized, depending on the role of the host in the time hierarchy. The behavior supports both secure unidirectional and bidirectional time exchanges, a critical aspect of defending Active Directory environments from time-based attacks.
