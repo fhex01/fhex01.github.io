@@ -10,6 +10,6 @@ First, we will examine how the **MS-SNTP** protocol works and how it is used wit
 
 Its main purpose is to maintain accurate time synchronization across networked devices, ensuring consistent timestamps and coordinated operations. In **Active Directory** infrastructures, its use is similar: it ensures time synchronization across all computers within a Windows domain. This synchronization is especially important for **Kerberos authentication**, which, during the **pre-authentication** phase, checks the timestamp provided by the client machine. 
 
-![image](https://github.com/user-attachments/assets/73cdabb1-70b7-41ee-9ee1-48a67bd9002d)
+![image](https://github.com/user-attachments/assets/3d5e8fe6-477b-45a6-be24-be886235781e)
 
 If there is a time difference greater than 5 minutes between the client and the **domain controller**, Kerberos pre-authentication fails. **MS-SNTP** ensures that all systems within an **Active Directory** domain are synchronized to a reliable time source.
