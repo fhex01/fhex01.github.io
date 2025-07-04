@@ -63,4 +63,6 @@ Coming back to our main objective, targeting not **computer accounts**, but **us
 
 If we could make a **user account appear as a machine account** to the **Domain Controller**, then the DC would behave as usual. It would generate the **MAC** using the supplied credentials, and the **cleartext password** used for that MAC would actually be the password of the **targeted user**.
 
-![image](https://github.com/user-attachments/assets/d1aeca11-6508-42a9-b6ac-642bc34c0d39)
+![image](https://github.com/user-attachments/assets/850b5e85-df15-426f-92ce-e634acebb667)
+
+That’s when the idea came to us: understanding **how the Domain Controller verifies** the validity and **type of object** it’s dealing with. This led us to take a closer look at the available `UserAccountControl` (UAC) flags, and how they influence the DC’s behavior.
