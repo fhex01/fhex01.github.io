@@ -40,10 +40,10 @@ Above, you can see a **Wireshark** capture showing the process, along with a **f
 
 **`UAC`** (for **`UserAccountControl`**) is an integer attribute on **user** and **computer** objects in **Active Directory (AD)** that represents a set of **bitwise flags**. Each bit defines a specific **property** or **behavior** of the account, such as whether the account is **disabled**, **locked out**, a **machine account**, **password never expires**, and so on. Based on the [Microsoft documentation](https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/useraccountcontrol-manipulate-account-properties), several **flags** are defined under **`UserAccountControl`**, such as:
 
-* **`INTERDOMAIN_TRUST_ACCOUNT`**
-* **`WORKSTATION_TRUST_ACCOUNT`**
-* **`SERVER_TRUST_ACCOUNT`**
-* **`DONT_EXPIRE_PASSWORD`**
+* `INTERDOMAIN_TRUST_ACCOUNT`
+* `WORKSTATION_TRUST_ACCOUNT`
+* `SERVER_TRUST_ACCOUNT`
+* `DONT_EXPIRE_PASSWORD`
 * and others...
 
 Each **flag** corresponds to a specific **bit position** in this integer. This means we use numbers to combine multiple states into a single value.
@@ -51,3 +51,10 @@ For example: **`66048`** in decimal, **`0x10200`** in hexadecimal, and **`0001 0
 
 This system is tied to how computers represent **bits**, and how we, as humans, read and interpret them.
 Each flag is a **power of 2**, representing a specific bit, making it easy to toggle individual settings using **bitwise operations**.
+
+So, to assign multiple **flags** to the same object, you simply add their **decimal values** together.
+For example, to set both **`WORKSTATION_TRUST_ACCOUNT`** (`4096` / `0x1000`) and **`DONT_EXPIRE_PASSWORD`** (`65536` / `0x10000`), you add:
+
+`4096 + 65536 = 69632`
+
+That resulting decimal value, **`69632`**, is what you assign to the **`UserAccountControl`** attribute.
