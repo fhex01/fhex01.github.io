@@ -63,6 +63,17 @@ Coming back to our main objective, targeting not **computer accounts**, but **us
 
 If we could make a **user account appear as a machine account** to the **Domain Controller**, then the DC would behave as usual. It would generate the **MAC** using the supplied credentials, and the **cleartext password** used for that MAC would actually be the password of the **targeted user**.
 
-![image](https://github.com/user-attachments/assets/850b5e85-df15-426f-92ce-e634acebb667)
+![image](https://github.com/user-attachments/assets/2c5f71c7-75e6-43c3-b929-fb374ef0dc62)
 
-That’s when the idea came to us: understanding **how the Domain Controller verifies** the validity and **type of object** it’s dealing with. This led us to take a closer look at the available `UserAccountControl` (UAC) flags, and how they influence the DC’s behavior.
+That’s when the idea came to us: understanding **how the Domain Controller verifies** the validity and **type of object** it’s dealing with. This led us to take a closer look at the available `UserAccountControl` (UAC) flags, and how they influence the DC’s behavior. It doesn’t just rely on how the object *looks* (like having a `$` at the end). It checks key attributes stored in Active Directory to determine whether the object is a **user**, a **machine**, or even a **domain controller**.
+
+The most critical attribute here is `userAccountControl`. This integer contains a combination of **bitwise flags**, and one of those flags explicitly tells the DC: *"this is a workstation trust account"*, or *"this is a standard user"*. Other attributes like `objectClass` or `objectCategory` help categorize the object, but **behavioral logic**, such as how MS-SNTP treats it, is ultimately driven by these flags.
+
+Here’s a quick summary:
+
+| Attribute            | Purpose                                     | Example value                        |
+| -------------------- | ------------------------------------------- | ------------------------------------ |
+| `objectClass`        | General category (`user`, `computer`, ...)  | `user`                             |
+| `objectCategory`     | Schema-based classification                 | `CN=Person,...` or `CN=Computer,...` |
+| `userAccountControl` | **Determines behavior and type** via flags  | `0x0200` = user, `0x1000` = machine  |
+| `sAMAccountName`     | Login name (trailing `$` is cosmetic only)  | `alice$`, `PC01$`                    |
