@@ -142,5 +142,3 @@ However, what you're seeing here is, unfortunately, just an illusion. If you loo
 Now we arrive at what I find to be the **most fascinating part** of the article: 
 
 We’re about to dive deep into the internals of **Microsoft Windows** and uncover **why elevated privileges are currently required** to perform this attack.
-
-![image](https://github.com/user-attachments/assets/2f1ed48e-7e06-49cb-871b-8765dce3acca)
