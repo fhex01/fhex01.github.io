@@ -145,7 +145,7 @@ We’re about to dive deep into the internals of **Microsoft Windows** and uncov
 
 So, we thought: what if we had **Full Control**, or permissions like **`WriteDACL`**, or even **`GenericAll`** over the user object? Could we then edit its attributes?
 
-![image](https://github.com/user-attachments/assets/8accb620-9250-46ed-b415-169e77521362)
+![image](https://github.com/user-attachments/assets/5ddde107-f38b-4a92-bd8c-83d27d4ad2e2)
 
 Well... **nope**.
 
