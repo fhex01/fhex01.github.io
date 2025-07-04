@@ -24,10 +24,18 @@ For example:
 
 So, before talking about **"Targeted Timeroasting"**, I’m going to explain what **Timeroasting** is in the first place. To do this, I set up a very simple lab with a basic Windows Server 2022 promoted as a **Primary Domain Controller (PDC)**. Domain-joined machines obtain time synchronization via NTP from a domain controller. 
 
-A Microsoft extension (MS-SNTP) adds a MAC authenticator calculated from the hash of a computer account, along with a **Relative Identifier (RID)** in the request. So, an attacker can send NTP requests specifying RIDs linked to machine accounts and receive hashes in response, which can then be cracked offline. The goal would be to send a time synchronization request to the Domain Controller, including the RID of the targeted machine account. The Domain Controller will then generate the MAC based on the provided RID, therefore using the **targeted machine account**.
+A Microsoft extension (MS-SNTP) adds a MAC authenticator calculated from the hash of a computer account, along with a **Relative Identifier (RID)** in the request. So, an attacker can send NTP requests specifying RIDs linked to machine accounts and receive hashes in response, which can then be cracked offline. 
+
+![image](https://github.com/user-attachments/assets/db0f9e09-0b7c-493b-bdcb-e5b972325ef1)
+
+The goal would be to send a time synchronization request to the Domain Controller, including the RID of the targeted machine account. The Domain Controller will then generate the MAC based on the provided RID, therefore using the **targeted machine account**.
 
 ![image](https://github.com/user-attachments/assets/98fe2782-8fa3-4220-974a-09df869e637e)
 
 Above, you can see a **Wireshark** capture showing the process, along with a **failure**, of a time synchronization request using the **`NTP`** protocol (**`MS-SNTP`**). You can observe that in the response sent by the **NTP server** (**the DC in our case**), the **MAC** is indeed present. Why didn’t the first attempt work? Because it couldn’t generate a **MAC**, since we had deliberately provided an incorrect **`RID`** for testing purposes.
 
 > Info: The **MAC** (Message Authentication Code) is a cryptographic signature added to the **`NTP`** response to ensure the **integrity** of the **NTP message** and the **authenticity** of the sender (the **Domain Controller**).
+
+## UAC Flags?
+
+**`UAC`** (for **`UserAccountControl`**) is an integer attribute on **user** and **computer** objects in **Active Directory (AD)** that represents a set of **bitwise flags**. Each bit defines a specific **property** or **behavior** of the account—such as whether the account is **disabled**, **locked out**, a **machine account**, **password never expires**, and so on.
