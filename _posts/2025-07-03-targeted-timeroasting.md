@@ -38,4 +38,16 @@ Above, you can see a **Wireshark** capture showing the process, along with a **f
 
 ## UAC Flags?
 
-**`UAC`** (for **`UserAccountControl`**) is an integer attribute on **user** and **computer** objects in **Active Directory (AD)** that represents a set of **bitwise flags**. Each bit defines a specific **property** or **behavior** of the account—such as whether the account is **disabled**, **locked out**, a **machine account**, **password never expires**, and so on.
+**`UAC`** (for **`UserAccountControl`**) is an integer attribute on **user** and **computer** objects in **Active Directory (AD)** that represents a set of **bitwise flags**. Each bit defines a specific **property** or **behavior** of the account, such as whether the account is **disabled**, **locked out**, a **machine account**, **password never expires**, and so on. Based on the [Microsoft documentation](https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/useraccountcontrol-manipulate-account-properties), several **flags** are defined under **`UserAccountControl`**, such as:
+
+* **`INTERDOMAIN_TRUST_ACCOUNT`**
+* **`WORKSTATION_TRUST_ACCOUNT`**
+* **`SERVER_TRUST_ACCOUNT`**
+* **`DONT_EXPIRE_PASSWORD`**
+* and others...
+
+Each **flag** corresponds to a specific **bit position** in this integer. This means we use numbers to combine multiple states into a single value.
+For example: **`66048`** in decimal, **`0x10200`** in hexadecimal, and **`0001 0000 0010 0000 0000`** in binary.
+
+This system is tied to how computers represent **bits**, and how we, as humans, read and interpret them.
+Each flag is a **power of 2**, representing a specific bit, making it easy to toggle individual settings using **bitwise operations**.
