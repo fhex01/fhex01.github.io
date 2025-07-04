@@ -143,10 +143,14 @@ Now we arrive at what I find to be the **most fascinating part** of the article:
 
 We’re about to dive deep into the internals of **Microsoft Windows** and uncover **why elevated privileges are currently required** to perform this attack. At first, we tried running the script using a **standard domain account**, no special permissions, no admin rights, and no delegation over the targeted account. As expected, it **didn’t work**: modifying that kind of attribute requires at least some permissions on the object.
 
-So, we thought: what if we had **Full Control**, or permissions like **`WriteDACL`**, or even **`GenericAll`** over the user object? Could we then edit its attributes?
+So, we thought: what if we had **Full Control**, or permissions like **`WriteDACL`**, or even **`GenericAll`** over the user object? Could we then edit `userAccountControl`?
 
 ![image](https://github.com/user-attachments/assets/5ddde107-f38b-4a92-bd8c-83d27d4ad2e2)
 
 Well... **nope**.
 
-That’s when things started getting interesting, and a bit frustrating. It marked the beginning of a **deep-dive investigation** into **why** this was happening.
+That’s when things started getting interesting, and a bit frustrating. It marked the beginning of a **deep-dive investigation** into **why** this was happening. Indeed, after initially checking the **DACLs** (Discretionary Access Control Lists) of the object we wanted to compromise, we noticed that **domain groups** like **Domain Admins**, **Enterprise Admins**, and even **Account Operators** had **Full Control** over the object. That led us to believe this was the right direction to investigate, that perhaps it was simply a matter of having the proper ACLs.
+
+![image](https://github.com/user-attachments/assets/d443c1b7-2ebb-43d3-b8b7-8cf24f21e17f)
+
+But we were still far from the full picture. After some research, we came across a few articles suggesting that access to certain attributes is, primarily for **security reasons**, handled **internally** by **Domain Controllers**, rather than being fully governed by DACLs. That’s when we decided to shift our investigation in that direction.
