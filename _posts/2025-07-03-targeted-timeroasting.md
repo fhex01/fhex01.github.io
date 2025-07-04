@@ -141,4 +141,12 @@ However, what you're seeing here is, unfortunately, just an illusion. If you loo
 
 Now we arrive at what I find to be the **most fascinating part** of the article: 
 
-We’re about to dive deep into the internals of **Microsoft Windows** and uncover **why elevated privileges are currently required** to perform this attack.
+We’re about to dive deep into the internals of **Microsoft Windows** and uncover **why elevated privileges are currently required** to perform this attack. At first, we tried running the script using a **standard domain account**, no special permissions, no admin rights, and no delegation over the targeted account. As expected, it **didn’t work**: modifying that kind of attribute requires at least some permissions on the object.
+
+So, we thought: what if we had **Full Control**, or permissions like **`WriteDACL`**, or even **`GenericAll`** over the user object? Could we then edit its attributes?
+
+![image](https://github.com/user-attachments/assets/8accb620-9250-46ed-b415-169e77521362)
+
+Well... **nope**.
+
+That’s when things started getting interesting, and a bit frustrating. It marked the beginning of a **deep-dive investigation** into **why** this was happening.
