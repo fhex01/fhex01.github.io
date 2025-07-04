@@ -131,12 +131,16 @@ foreach ($h in $e){
 $g.Close()
 ```
 
-*(You can now paste the script so I can format and annotate it if needed.)*
-
 ## The problems come faster than you'd like to believe...
 
 Great, for the sake of experimentation, we decided to target a test account created specifically for this purpose, named `j.doe` (John Doe). We ran the script, pointed it at the **Domain Controller** and the **target account**. Below is the screenshot of the script's execution, and as you can see, the result is quite telling.
 
-*(Feel free to upload the screenshot so I can help analyze it or highlight key details.)*
-
 ![image](https://github.com/user-attachments/assets/761101e4-e5f5-4864-948a-b5c22d4692b8)
+
+However, what you're seeing here is, unfortunately, just an illusion. If you look closely, you’ll notice that I’m currently running the session as **Administrator**. That means I’m a member of both the **Domain Admins** and **Enterprise Admins** groups at the time of executing this command. And unfortunately, those are **critical requirements** for this attack to work successfully.
+
+Now we arrive at what I find to be the **most fascinating part** of the article: 
+
+We’re about to dive deep into the internals of **Microsoft Windows** and uncover **why elevated privileges are currently required** to perform this attack.
+
+![image](https://github.com/user-attachments/assets/2f1ed48e-7e06-49cb-871b-8765dce3acca)
