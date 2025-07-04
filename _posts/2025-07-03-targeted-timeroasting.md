@@ -80,7 +80,7 @@ Here’s a quick summary:
 
 So, as you may have guessed, the goal is to **target a user account** by modifying some of its attributes, specifically the `UserAccountControl`, to make it appear as a **machine account**. This way, the **Domain Controller** will generate a **MAC** in its response based on the **user’s password**, just as it would for a legitimate machine account. To achieve this, and to automate the process, we wrote a **PowerShell script** that:
 
-* Adds the appropriate **`UserAccountControl`** flag to the targeted user account.
+* Adds the appropriate **`UserAccountControl`** flag (`WORKSTATION_TRUST_ACCOUNT` = 4096) to the targeted user account.
 * Sends the crafted **NTP request** to the Domain Controller.
 * Formats the response data properly for **offline cracking**.
 * Then restores the original attribute values for better **OPSEC**.
@@ -132,3 +132,11 @@ $g.Close()
 ```
 
 *(You can now paste the script so I can format and annotate it if needed.)*
+
+## The problems come faster than you'd like to believe...
+
+Great, for the sake of experimentation, we decided to target a test account created specifically for this purpose, named `j.doe` (John Doe). We ran the script, pointed it at the **Domain Controller** and the **target account**. Below is the screenshot of the script's execution, and as you can see, the result is quite telling.
+
+*(Feel free to upload the screenshot so I can help analyze it or highlight key details.)*
+
+![image](https://github.com/user-attachments/assets/761101e4-e5f5-4864-948a-b5c22d4692b8)
