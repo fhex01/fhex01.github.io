@@ -58,3 +58,9 @@ For example, to set both **`WORKSTATION_TRUST_ACCOUNT`** (`4096` / `0x1000`) and
 `4096 + 65536 = 69632`
 
 That resulting decimal value, **`69632`**, is what you assign to the **`UserAccountControl`** attribute.
+
+Coming back to our main objective, targeting not **computer accounts**, but **user accounts**. The idea we had (inspired by an **excellent article** I highly recommend, I’ll share it at the end) was the following:
+
+If we could make a **user account appear as a machine account** to the **Domain Controller**, then the DC would behave as usual. It would generate the **MAC** using the supplied credentials, and the **cleartext password** used for that MAC would actually be the password of the **targeted user**.
+
+![image](https://github.com/user-attachments/assets/d1aeca11-6508-42a9-b6ac-642bc34c0d39)
