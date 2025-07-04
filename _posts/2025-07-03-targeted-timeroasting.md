@@ -154,3 +154,17 @@ That’s when things started getting interesting, and a bit frustrating. It mark
 ![image](https://github.com/user-attachments/assets/d443c1b7-2ebb-43d3-b8b7-8cf24f21e17f)
 
 But we were still far from the full picture. After some research, we came across a few articles suggesting that access to certain attributes is, primarily for **security reasons**, handled **internally** by **Domain Controllers**, rather than being fully governed by DACLs. That’s when we decided to shift our investigation in that direction.
+
+We discovered the existence of a DLL we hadn’t encountered before: **`ntdsai.dll`**.
+
+This module is part of the **NTDS (NT Directory Services)** subsystem and is responsible for a large portion of the **internal logic and functionality** that powers **Active Directory**.
+
+Here's what makes `ntdsai.dll` so crucial:
+
+* It handles communication with the **Active Directory database** (`NTDS.DIT`), controlling how data is **read, written, and queried**.
+* It enforces **directory schema rules**, **security descriptors**, and **object relationships**, making it a core component of any Domain Controller’s behavior.
+* It plays a **central role in replication**, implementing the logic behind **multi-master replication** to ensure consistency across domain controllers.
+* It supports **internal operations** like **LDAP query handling**, **authentication**, **directory updates**, and **transaction integrity**.
+* It enforces **referential integrity** between directory objects and manages **replication metadata**.
+
+After discovering it, we began creating a non-exhaustive map of the internal checks that the Domain Controller performs, or at least approximations of them, based on our observations and research.
