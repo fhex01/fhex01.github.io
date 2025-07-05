@@ -183,4 +183,8 @@ Finally, the result, either success or failure, is returned to the client in a s
 
 ![image](https://github.com/user-attachments/assets/58d65da2-c61d-4c96-8e99-b72613b9ce21)
 
-**The initial bypass techniques are more or less feasible depending on the situation.** What I’d like to discuss with you now is the idea of **hooking the DLL directly**. However, in order to do that, we’ll first need to **identify the exact function we want to target**. **Let’s dive into the world of reverse engineering.**
+**The initial bypass techniques are more or less feasible depending on the situation.** What I’d like to discuss with you now is the idea of **hooking the DLL directly**. However, in order to do that, we’ll first need to **identify the exact function we want to target**. **Let’s dive into the world of reverse engineering.** **The first thing to do is identify where the DLL is located on the domain controller.** An important and interesting point to note is that **this DLL is only present on domain controllers**, and only when the **Active Directory Domain Services (AD DS)** role is installed. **On domain controllers**, the DLL is located at `C:\Windows\System32\ntdsai.dll` by default. 
+
+![image](https://github.com/user-attachments/assets/87f31514-a32a-4af2-90be-57b476b4338b)
+
+**Let’s copy it, and begin our descent into hell.**
