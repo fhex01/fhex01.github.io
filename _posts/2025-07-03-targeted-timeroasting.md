@@ -1,4 +1,4 @@
-# Targeted Timeroasting: Weaponizing Users and Computers with Controlled UAC Flags
+# Targeted Timeroasting: Weaponizing Users and Computers with Controlled UAC Flags (Pt. 1)
 
 Do you know **NTP**, or its Microsoft Windows variant, **MS-SNTP**? Well, I racked my brain trying to figure out what it was, and I found it really interesting. In this article, we will focus exclusively on the **MS-SNTP** protocol. We will explore how this protocol could potentially be exploited to steal authentication or identification credentials. 
 
@@ -61,7 +61,7 @@ That resulting decimal value, **`69632`**, is what you assign to the **`UserAcco
 
 Coming back to our main objective, targeting not **computer accounts**, but **user accounts**. The idea we had (inspired by an **excellent article** I highly recommend, I’ll share it at the end) was the following:
 
-If we could make a **user account appear as a machine account** to the **Domain Controller**, then the DC would behave as usual. It would generate the **MAC** using the supplied credentials, and the **cleartext password** used for that MAC would actually be the password of the **targeted user**.
+If we could make a **user account appear as a machine account** to the **Domain Controller**, then the DC would behave as usual. It would generate the **MAC** using the supplied credentials, and the **hash** used for that MAC would actually be the hash of the **targeted user**.
 
 ![image](https://github.com/user-attachments/assets/2c5f71c7-75e6-43c3-b929-fb374ef0dc62)
 
@@ -78,7 +78,7 @@ Here’s a quick summary:
 | `userAccountControl` | **Determines behavior and type** via flags  | `0x0200` = user, `0x1000` = machine  |
 | `sAMAccountName`     | Login name (trailing `$` is cosmetic only)  | `alice$`, `PC01$`                    |
 
-So, as you may have guessed, the goal is to **target a user account** by modifying some of its attributes, specifically the `UserAccountControl`, to make it appear as a **machine account**. This way, the **Domain Controller** will generate a **MAC** in its response based on the **user’s password**, just as it would for a legitimate machine account. To achieve this, and to automate the process, we wrote a **PowerShell script** that:
+So, as you may have guessed, the goal is to **target a user account** by modifying some of its attributes, specifically the `UserAccountControl`, to make it appear as a **machine account**. This way, the **Domain Controller** will generate a **MAC** in its response based on the **user’s secrets**, just as it would for a legitimate machine account. To achieve this, and to automate the process, we wrote a **PowerShell script** that:
 
 * Adds the appropriate **`UserAccountControl`** flag (`WORKSTATION_TRUST_ACCOUNT` = 4096) to the targeted user account.
 * Sends the crafted **NTP request** to the Domain Controller.
@@ -143,7 +143,7 @@ Now we arrive at what I find to be the **most fascinating part** of the article:
 
 We’re about to dive deep into the internals of **Microsoft Windows** and uncover **why elevated privileges are currently required** to perform this attack. At first, we tried running the script using a **standard domain account**, no special permissions, no admin rights, and no delegation over the targeted account. As expected, it **didn’t work**: modifying that kind of attribute requires at least some permissions on the object.
 
-So, we thought: what if we had **Full Control**, or permissions like **`WriteDACL`**, or even **`GenericAll`** over the user object? Could we then edit `userAccountControl`?
+So, we thought: what if we had **Full Control**, or permissions like **`WriteDACL`**, or even **`GenericAll`** over the user object? Could we then edit `userAccountControl` for the **WORKSTATION_TRUST_ACCOUNT** flag?
 
 ![image](https://github.com/user-attachments/assets/5ddde107-f38b-4a92-bd8c-83d27d4ad2e2)
 
@@ -183,13 +183,11 @@ Finally, the result, either success or failure, is returned to the client in a s
 
 ![image](https://github.com/user-attachments/assets/58d65da2-c61d-4c96-8e99-b72613b9ce21)
 
-**The initial bypass techniques are more or less feasible depending on the situation.** What I’d like to discuss with you now is the idea of **hooking the DLL directly**. However, in order to do that, we’ll first need to **identify the exact function we want to target**. **Let’s dive into the world of reverse engineering.** **The first thing to do is identify where the DLL is located on the domain controller.** An important and interesting point to note is that **this DLL is only present on domain controllers**, and only when the **Active Directory Domain Services (AD DS)** role is installed. **On domain controllers**, the DLL is located at `C:\Windows\System32\ntdsai.dll` by default. 
+**The initial bypass techniques are more or less feasible depending on the situation.** What I’d like to discuss with you now is the idea of **hooking the DLL directly**. However, in order to do that, we’ll first need to **identify the exact function we want to target**. **Let’s dive into the world of reverse engineering.** **The first thing to do is identify where the DLL is located on the domain controller.** An important and interesting point to note is that **this DLL is only present on domain controllers**. The DLL is located at `C:\Windows\System32\ntdsai.dll`. 
 
 ![image](https://github.com/user-attachments/assets/87f31514-a32a-4af2-90be-57b476b4338b)
 
-**Let’s copy it, and begin our descent into hell.**
-
-**Ultimately, after some analysis, we realized we won’t be able to go much further.** **The prerequisites are far too heavy and complex** for such a simple attack. The idea was mainly to show you my **methodology**, and to offer a new perspective on this attack. 
+**Ultimately, after some analysis, we realized we won’t be able to go much further.** **The prerequisites are far too heavy and complex** for such a simple attack.
 
 ![image](https://github.com/user-attachments/assets/0e5e5858-7c92-4850-a80d-cf18194e8b55)
 
@@ -197,6 +195,13 @@ After importing the DLL into `Binary Ninja`, I identified one of the functions c
 
 ## Conclusion
 
-**In conclusion**, carrying out this attack requires being a principal with a level of permissions that is currently far too high to be practical, so it’s not particularly viable at this stage. **However**, I hope you’ve learned something throughout this article.
+**In conclusion**, carrying out this attack requires being a principal with a level of permissions that is currently far too high to be practical, so it’s not particularly viable at this stage. **However**, I hope you’ve learned something throughout this article. Just so you know, I’m not ruling out the possibility of a part 2 to this article, so stay tuned.
 
 **Wishing you nothing but the best, see you in the next write-up!**
+
+## Sources
+
+https://medium.com/@offsecdeer/targeted-timeroasting-stealing-user-hashes-with-ntp-b75c1f71b9ac
+https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/useraccountcontrol-manipulate-account-properties
+https://github.com/SecuraBV/Timeroast
+https://cybersecurity.bureauveritas.com/uploads/whitepapers/Secura-WP-Timeroasting-v3.pdf
