@@ -169,14 +169,18 @@ Here's what makes `ntdsai.dll` so crucial:
 
 After discovering it, we began creating a non-exhaustive map of the internal checks that the Domain Controller performs, or at least approximations of them, based on our observations and research.
 
-![image](https://github.com/user-attachments/assets/ca871212-f927-4208-8076-6ab067b650d5)
+![image](https://github.com/user-attachments/assets/2185a1ed-eead-4fc0-b9ff-6fe7eaf93667)
 
 The process begins when a client, such as `powershell.exe`, initiates a change to Active Directory using a .NET API. This call is wrapped by a .NET/LDAP layer that formats the request into a proper LDAP `ModifyRequest` and sends it to `lsass.exe`, the Local Security Authority Subsystem Service, which hosts the Active Directory Domain Services (NTDS).
 
 Once received, `lsass.exe` invokes ACL validation to ensure that the caller has the proper permissions to perform the requested operation. This is done by checking the DACL (Discretionary Access Control List) within the object’s security descriptor. If access is allowed, the system proceeds with further processing.
 
-The request then flows through the schema validation stage. Here, the system performs a lookup against the AD schema to verify that the operation aligns with defined constraints—such as `objectClass`, `syntaxID`, and attribute rules. This ensures structural and syntactical integrity.
+The request then flows through the schema validation stage. Here, the system performs a lookup against the AD schema to verify that the operation aligns with defined constraints, such as `objectClass`, `syntaxID`, and attribute rules. This ensures structural and syntactical integrity.
 
 Following schema validation, the operation is passed to `ntdsai.dll`, which contains the core business logic of Active Directory. This DLL enforces hardcoded validation rules, including attribute cross-checks. For example, if the `objectClass` is `"user"` and the `userAccountControl` (`uac`) attribute is set to `4096`, the operation will be rejected. This ensures internal consistency and prevents invalid object states.
 
-Finally, the result, either success or failure, is returned to the client in a structured response.
+Finally, the result, either success or failure, is returned to the client in a structured response. **After understanding this**, we then tried to **identify possible bypass techniques** that could be available to us, in order to later attempt to **circumvent the restrictions** applied to the `userAccountControl` attribute:
+
+![image](https://github.com/user-attachments/assets/58d65da2-c61d-4c96-8e99-b72613b9ce21)
+
+**The initial bypass techniques are more or less feasible depending on the situation.** What I’d like to discuss with you now is the idea of **hooking the DLL directly**. However, in order to do that, we’ll first need to **identify the exact function we want to target**. **Let’s dive into the world of reverse engineering.**
