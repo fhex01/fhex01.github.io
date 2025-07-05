@@ -2,7 +2,7 @@
 
 Do you know **NTP**, or its Microsoft Windows variant, **MS-SNTP**? Well, I racked my brain trying to figure out what it was, and I found it really interesting. In this article, we will focus exclusively on the **MS-SNTP** protocol. We will explore how this protocol could potentially be exploited to steal authentication or identification credentials. 
 
-First, we will examine how the **MS-SNTP** protocol works and how it is used within **Active Directory** infrastructures. We will also highlight its importance in such environments. Next, we will explore how the **MS-SNTP** protocol can be abused by proposing a variation of an existing attack. We will develop a proof-of-concept exploit (`PoC`) and then suggest possible **remediations** to protect against this attack.
+First, we will examine how the **MS-SNTP** protocol works and how it is used within **Active Directory** infrastructures. We will also highlight its importance in such environments. Next, we will explore how the **MS-SNTP** protocol can be abused by proposing a variation of an existing attack. We will develop a proof-of-concept exploit (`PoC`) during this article for example.
 
 ## What is the MS-SNTP protocol, and how does it work?
 
@@ -188,3 +188,15 @@ Finally, the result, either success or failure, is returned to the client in a s
 ![image](https://github.com/user-attachments/assets/87f31514-a32a-4af2-90be-57b476b4338b)
 
 **Let’s copy it, and begin our descent into hell.**
+
+**Ultimately, after some analysis, we realized we won’t be able to go much further.** **The prerequisites are far too heavy and complex** for such a simple attack. The idea was mainly to show you my **methodology**, and to offer a new perspective on this attack. 
+
+![image](https://github.com/user-attachments/assets/0e5e5858-7c92-4850-a80d-cf18194e8b55)
+
+After importing the DLL into `Binary Ninja`, I identified one of the functions causing issues, located in `samsrv.dll`. **Unfortunately, analyzing everything in depth would take too much time**, so I’ll save that for a potential future article.
+
+## Conclusion
+
+**In conclusion**, carrying out this attack requires being a principal with a level of permissions that is currently far too high to be practical, so it’s not particularly viable at this stage. **However**, I hope you’ve learned something throughout this article.
+
+**Wishing you nothing but the best, see you in the next write-up!**
