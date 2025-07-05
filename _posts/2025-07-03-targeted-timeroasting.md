@@ -193,7 +193,7 @@ Finally, the result, either success or failure, is returned to the client in a s
 
 ![image](https://github.com/user-attachments/assets/0e5e5858-7c92-4850-a80d-cf18194e8b55)
 
-After importing the DLL into `Binary Ninja`, I identified one of the functions causing issues, located in `samsrv.dll`. **Unfortunately, analyzing everything in depth would take too much time**, so I’ll save that for a potential future article.
+After importing the DLL into `Binary Ninja`, I identified one of the functions causing issues, located in `samsrv.dll`. **Unfortunately, analyzing everything in depth would take too much time**, so I’ll save that for a potential future article. **Additionally**, DLL hooking generally requires having **local administrator privileges** on the machine, which means being **local admin on the domain controller**...
 
 ## Conclusion
 
