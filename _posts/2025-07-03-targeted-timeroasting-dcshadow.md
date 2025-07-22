@@ -6,6 +6,4 @@ Subsequently, we’ll **delve into** the study of the `classic TimeRoasting atta
 
 ## NTP Protocol
 
-The **Network Time Protocol** (`NTP`) is a **network protocol** designed to **synchronize** the clocks of computer systems over **packet‑switched networks**, typically via `UDP port 123`, to ensure a **common time base** (`UTC`) on a global scale.
-
-In practice, **NTP** can achieve an accuracy on the order of tens of **milliseconds** over the public Internet, and drop below a **millisecond** on `LANs` with reduced latency.
+**Network Time Protocol** (`NTP`) is an **application‑layer network protocol**, originally defined in `RFC 1305` (updated by `RFC 5905`), whose **objective** is to **synchronize** the internal clocks of computer systems with each other and with **Coordinated Universal Time** (`UTC`). It relies on exchanges of `UDP` packets (`port 123`) and uses an **intersection algorithm** (a variant of the **Marzullo algorithm**) to select the most reliable **time sources** and compensate for variable **network latency**.
