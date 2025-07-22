@@ -1,4 +1,4 @@
-# ClockMock: Merging Time‑Roasting with DCShadow for "Stealth" Operations
+# ClockMock: Merging TimeRoasting with DCShadow for "Stealth" Operations
 
 Hey, **welcome to my blog**. This is my **first post**, and I sincerely hope you’ll enjoy it. In this article, based on my research, we’ll explore a potential new `attack surface` that combines **stealth** and **performance**. Please don’t mock the **name**; I just **made it up** to give my article a good title, so feel free to choose the `path` however you’d like. In this **article**, we’ll **cover** a range of **fascinating** `topics`, notably the dissection of the **NTP protocol**, and more specifically the specification of the `Network Time Protocol (NTP) Authentication Extensions`, which provides an authentication mechanism for **NTP version 3** (`RFC 1305`) and for **SNTP version 4** (`RFC 2030`). 
 
