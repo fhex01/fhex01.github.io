@@ -1,3 +1,11 @@
-# ClockMock: Merging Time‑Roasting with DCShadow for "Stealth" Breaches
+# ClockMock: Merging Time‑Roasting with DCShadow for "Stealth" Operations
 
-Hey, **welcome to my blog**. This is my **first post**, and I sincerely hope you’ll enjoy it. In this article, based on my research, we’ll explore a potential new `attack surface` that combines **stealth** and **performance**. Please don’t mock the **name**; I just **made it up** to give my article a good title, so feel free to choose the `path` however you’d like. In this **article**, we’ll **cover** a range of **fascinating** `topics`, notably the dissection of the **NTP protocol**, and more specifically the specification of the `Network Time Protocol (NTP) Authentication Extensions`, which provides an authentication mechanism for **NTP version 3** (`RFC 1305`) and for **SNTP version 4** (`RFC 2030`). Subsequently, we’ll **delve into** the study of the `classic TimeRoasting attack`, so as not to get lost later when presenting the `Targeted TimeRoasting attack`. Then, we’ll **examine** the workings of the `DCShadow attack`, in order to finally **introduce** the article’s key subject: the **combination** of the two for a true masterstroke.
+Hey, **welcome to my blog**. This is my **first post**, and I sincerely hope you’ll enjoy it. In this article, based on my research, we’ll explore a potential new `attack surface` that combines **stealth** and **performance**. Please don’t mock the **name**; I just **made it up** to give my article a good title, so feel free to choose the `path` however you’d like. In this **article**, we’ll **cover** a range of **fascinating** `topics`, notably the dissection of the **NTP protocol**, and more specifically the specification of the `Network Time Protocol (NTP) Authentication Extensions`, which provides an authentication mechanism for **NTP version 3** (`RFC 1305`) and for **SNTP version 4** (`RFC 2030`). 
+
+Subsequently, we’ll **delve into** the study of the `classic TimeRoasting attack`, so as not to get lost later when presenting the `Targeted TimeRoasting attack`. Then, we’ll **examine** the workings of the `DCShadow attack`, in order to finally **introduce** the article’s key subject: the **combination** of the two for a true masterstroke.
+
+## NTP Protocol
+
+The **Network Time Protocol** (`NTP`) is a **network protocol** designed to **synchronize** the clocks of computer systems over **packet‑switched networks**, typically via `UDP port 123`, to ensure a **common time base** (`UTC`) on a global scale.
+
+In practice, **NTP** can achieve an accuracy on the order of tens of **milliseconds** over the public Internet, and drop below a **millisecond** on `LANs` with reduced latency.
