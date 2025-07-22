@@ -6,7 +6,7 @@ Subsequently, we’ll **delve into** the study of the `classic TimeRoasting atta
 
 ## NTP Protocol
 
-**Network Time Protocol** (`NTP`) is a network protocol**, originally defined in `RFC 1305` (updated by `RFC 5905`), whose **objective** is to **synchronize** the internal clocks of computer systems with each other and with **Coordinated Universal Time** (`UTC`). It relies on exchanges of `UDP` packets (`port 123`) and uses an **intersection algorithm** (a variant of the **Marzullo algorithm**) to select the most reliable **time sources** and compensate for variable **network latency**. It is an **Application‑layer protocol** (`Layer 7` of the OSI model). It relies on `UDP` (`Layer 4` – Transport) to exchange its datagrams (port `123`), but the actual **time synchronization service** resides in the **Application layer**.
+**Network Time Protocol** (`NTP`) is a network protocol, originally defined in `RFC 1305` (updated by `RFC 5905`), whose **objective** is to **synchronize** the internal clocks of computer systems with each other and with **Coordinated Universal Time** (`UTC`). It relies on exchanges of `UDP` packets (`port 123`) and uses an **intersection algorithm** (a variant of the **Marzullo algorithm**) to select the most reliable **time sources** and compensate for variable **network latency**. It is an **Application‑layer protocol** (`Layer 7` of the OSI model). It relies on `UDP` (`Layer 4` – Transport) to exchange its datagrams (port `123`), but the actual **time synchronization service** resides in the **Application layer**.
 
 **An NTP packet** is a fixed `48 bytes` long and encoded in **big‑endian** order. Let’s walk now through each **field** as if we were gently unpacking a neatly wrapped gift.
 
